@@ -1,0 +1,39 @@
+id = "freebuff.integration"
+name = "Freebuff"
+version = "1.0.0"
+min_herdr_version = "0.7.0"
+description = "Launch Freebuff inside Herdr with accurate lifecycle tracking (idle/working/blocked), pid-bound chat attribution and session reporting."
+platforms = ["linux", "macos", "windows"]
+
+# 交互式 freebuff 会话通过插件 PANE 入口运行：herdr 为每个窗格开启真实 PTY，
+# freebuff 的 TUI 需要 TTY（actions/CLI 没有 TTY，无法启动交互式 agent）。
+# 可在 herdr 配置中绑定快捷键：
+#   [[keys.command]]
+#   key = "prefix+f"
+#   type = "plugin_pane"
+#   command = "freebuff.integration.task"
+#   description = "Freebuff: 新任务"
+
+[[panes]]
+id = "task"
+title = "Freebuff"
+placement = "split"
+command = ["sh", "scripts/launch.sh", "task"]
+
+[[panes]]
+id = "resume-last"
+title = "Freebuff (上次会话)"
+placement = "split"
+command = ["sh", "scripts/launch.sh", "resume-last"]
+
+[[actions]]
+id = "setup"
+title = "Freebuff: 安装 herdr 集成"
+contexts = ["workspace"]
+command = ["sh", "scripts/setup.sh"]
+
+[[actions]]
+id = "notify"
+title = "Freebuff: 发送通知"
+contexts = ["workspace", "pane"]
+command = ["sh", "scripts/notify.sh"]

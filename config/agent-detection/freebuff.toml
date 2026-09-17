@@ -1,0 +1,8 @@
+# Freebuff agent-detection 覆盖配置。
+# 由 scripts/common.sh 播种到 $HERDR_PLUGIN_CONFIG_DIR/agent-detection/。
+# 使 herdr 侧边栏把 freebuff 进程识别为 agent 并显示其状态徽标。
+
+[[agent]]
+name = "freebuff"
+match_cmdline = ["freebuff"]
+alt_cmdline = ["manicode/freebuff"]
